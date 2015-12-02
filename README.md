@@ -4,8 +4,7 @@ This plugin provides a powerful yet easy implementation of tables using knockout
 ```sh
 $ <ko-table params="list: people, options: {}"></ko-table>
 ```
-### Demo
-( Coming up soon )
+### [Try out demo](http://vaibhav93.github.io/knockout-table/)
 ### Features
   - Provide table data from your viewModel (ObservableArray)
   - Choose any number of keys from the objects on your array.
@@ -14,3 +13,4 @@ $ <ko-table params="list: people, options: {}"></ko-table>
   - Filter columns
   - Custom css classes for tables and rows so that you can customize according to your CSS framework
   - Pagination
+  - AMD (Require.js) compatible
