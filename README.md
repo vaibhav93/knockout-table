@@ -7,7 +7,7 @@ $ <ko-table params="list: people, options: {}"></ko-table>
 ### Demo
 ( Coming up soon )
 ### Features
-  - Provide table data from your viewModel (Array/ObservableArray)
+  - Provide table data from your viewModel (ObservableArray)
   - Choose any number of keys from the objects on your array.
   - Reordering of columns
   - Specify column widths and headers
