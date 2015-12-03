@@ -23,6 +23,6 @@ gulp.task('jshint', function () {
 gulp.task('uglify',function () {
     return gulp.src('src/*.js')
         .pipe(uglify())
-        .pipe(rename('knouckout.table.min.js'))
+        .pipe(rename('knockout.table.min.js'))
         .pipe(gulp.dest('dist'));
 });
