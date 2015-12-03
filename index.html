@@ -10,10 +10,11 @@
 
 <body>
     <div class="container">
-        <ko-table params="list: people,options:options"></ko-table>
+        <ko-table params="list: mappedData.admins,options:{}"></ko-table>
     </div>
     <script src="js/knockout-3.3.0.js"></script>
-    <script src="js/knockout.table.min.js"></script>
+    <script src="js/knockout.mapping.js"></script>
+    <script src="js/knockout.table.js"></script>
     <script src="js/PersonModel.js"></script>
 </body>
 

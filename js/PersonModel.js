@@ -1,5 +1,7 @@
 var PersonModel = function () {
+    var self = this;
     this.firstName = ko.observable("");
+    self.mappedData = {};
     this.options = {
         tableClass: 'table table-striped',
         pageRecords: 5,
@@ -17,6 +19,21 @@ var PersonModel = function () {
                     }
                 ]
     };
+    this.testData = {
+        name:'app name',
+        admins:[
+            {
+                email:'vaibhav@gmail.com',
+                name:'vaibhav'
+            },
+            {
+                email:'mohak@gmail.com',
+                name:'mohak'
+            }
+        ]
+    };
+    self.mappedData = ko.mapping.fromJS(this.testData);
+    console.log(self.mappedData);
     this.people = ko.observableArray(
     [
             {
