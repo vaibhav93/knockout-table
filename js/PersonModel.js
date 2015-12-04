@@ -26,7 +26,7 @@ var PersonModel = function () {
             },
             {
                 id: '4533',
-                email: 'nitesh.kumar@oracle.com',
+                email: 'nitesh.kumar@gmail.com',
                 added: '24/11/2015'
             },
             {
@@ -36,12 +36,12 @@ var PersonModel = function () {
             },
             {
                 id: '9878',
-                email: 'saurabh.sahu@oracle.com',
+                email: 'saurabh.sahu@gmail.com',
                 added: '11/12/2015'
             },
             {
                 id: '9877',
-                email: 'sourav.poddar@oracle.com',
+                email: 'sourav.poddar@gmail.com',
                 added: '11/12/2015'
             },
             {
@@ -51,7 +51,7 @@ var PersonModel = function () {
             },
             {
                 id: '4533',
-                email: 'nitesh.kumar@oracle.com',
+                email: 'nitesh.kumar@gmail.com',
                 added: '24/11/2015'
             },
             {
@@ -61,12 +61,12 @@ var PersonModel = function () {
             },
             {
                 id: '9878',
-                email: 'saurabh.sahu@oracle.com',
+                email: 'saurabh.sahu@gmail.com',
                 added: '11/12/2015'
             },
             {
                 id: '9877',
-                email: 'sourav.poddar@oracle.com',
+                email: 'sourav.poddar@gmail.com',
                 added: '11/12/2015'
             },
             {
@@ -76,7 +76,7 @@ var PersonModel = function () {
             },
             {
                 id: '4533',
-                email: 'nitesh.kumar@oracle.com',
+                email: 'nitesh.kumar@gmail.com',
                 added: '24/11/2015'
             },
             {
@@ -86,12 +86,12 @@ var PersonModel = function () {
             },
             {
                 id: '9878',
-                email: 'saurabh.sahu@oracle.com',
+                email: 'saurabh.sahu@gmail.com',
                 added: '11/12/2015'
             },
             {
                 id: '9877',
-                email: 'sourav.poddar@oracle.com',
+                email: 'sourav.poddar@gmail.com',
                 added: '11/12/2015'
             },
             {
@@ -101,7 +101,7 @@ var PersonModel = function () {
             },
             {
                 id: '4533',
-                email: 'nitesh.kumar@oracle.com',
+                email: 'nitesh.kumar@gmail.com',
                 added: '24/11/2015'
             },
             {
@@ -111,12 +111,12 @@ var PersonModel = function () {
             },
             {
                 id: '9878',
-                email: 'saurabh.sahu@oracle.com',
+                email: 'saurabh.sahu@gmail.com',
                 added: '11/12/2015'
             },
             {
                 id: '9877',
-                email: 'sourav.poddar@oracle.com',
+                email: 'sourav.poddar@gmail.com',
                 added: '11/12/2015'
             },
             {
@@ -126,7 +126,7 @@ var PersonModel = function () {
             },
             {
                 id: '4533',
-                email: 'nitesh.kumar@oracle.com',
+                email: 'nitesh.kumar@gmail.com',
                 added: '24/11/2015'
             },
             {
@@ -136,12 +136,12 @@ var PersonModel = function () {
             },
             {
                 id: '9878',
-                email: 'saurabh.sahu@oracle.com',
+                email: 'saurabh.sahu@gmail.com',
                 added: '11/12/2015'
             },
             {
                 id: '9877',
-                email: 'sourav.poddar@oracle.com',
+                email: 'sourav.poddar@gmail.com',
                 added: '11/12/2015'
             },
             {
@@ -151,7 +151,7 @@ var PersonModel = function () {
             },
             {
                 id: '4533',
-                email: 'nitesh.kumar@oracle.com',
+                email: 'nitesh.kumar@gmail.com',
                 added: '24/11/2015'
             },
             {
@@ -161,12 +161,12 @@ var PersonModel = function () {
             },
             {
                 id: '9878',
-                email: 'saurabh.sahu@oracle.com',
+                email: 'saurabh.sahu@gmail.com',
                 added: '11/12/2015'
             },
             {
                 id: '9877',
-                email: 'sourav.poddar@oracle.com',
+                email: 'sourav.poddar@gmail.com',
                 added: '11/12/2015'
             }
     ]
