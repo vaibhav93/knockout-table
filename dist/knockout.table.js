@@ -44,7 +44,7 @@
                     //to form table headers
                     self.list.subscribe(function (change) {
                         var keys = [];
-                        if (change[0].status === 'added' && change[0].index == 0) {
+                        if (change[0].status === 'added' && change[0].index === 0) {
                             console.log('yay, I Ran');
                             keys = Object.keys(change[0].value);
                             ko.utils.arrayForEach(keys, function (key) {
@@ -118,9 +118,14 @@
             self.filteredItems = ko.computed(function () {
                 return ko.utils.arrayFilter(self.list(), function (item) {
                     for (var prop in self.filter) {
+                        var value;
+                        if(ko.isObservable(item[prop]))
+                            value = item[prop]();
+                        else
+                            value = item[prop];
                         var filter = self.filter[prop]();
                         if (filter.length > 0) {
-                            if (item[prop].toLowerCase().indexOf(filter) < 0)
+                            if (value.toLowerCase().indexOf(filter) < 0)
                                 return false;
                         }
                     }
