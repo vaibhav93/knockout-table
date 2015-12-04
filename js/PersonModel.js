@@ -1,7 +1,7 @@
 var PersonModel = function () {
     var self = this;
     this.firstName = ko.observable("");
-    self.mappedData = {};
+    self.mappedData = ko.observable({});
     this.options = {
         tableClass: 'table table-striped',
         pageRecords: 5,
@@ -11,12 +11,12 @@ var PersonModel = function () {
                 name: 'ID', //name to display on column header
                 filter: true, //true or false. if not specified default:false
                 width: '' //optional col width in px or perc
-                    },
+            },
             {
                 key: 'email',
                 name: 'E-Mail',
                 filter: true
-                    }
+            }
                 ]
     };
     this.testData = {
@@ -32,8 +32,8 @@ var PersonModel = function () {
             }
         ]
     };
-    self.mappedData = ko.mapping.fromJS(this.testData);
-    console.log(self.mappedData);
+    self.mappedData=ko.mapping.fromJS(this.testData);
+    //console.log(self.mappedData.admins()[0]);
     this.people = ko.observableArray(
     [
             {
