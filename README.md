@@ -7,7 +7,7 @@ This plugin provides a powerful yet easy implementation of tables using knockout
 
 ### [Try out demo](http://vaibhav93.github.io/knockout-table/)
 ## Features
-  - Provide table data from your viewModel (Array/ObservableArray)
+  - Provide table data from your viewModel (ObservableArray)
   - Choose any number of keys from the objects on your array.
   - Reordering of columns
   - Specify column widths and headers
@@ -33,9 +33,35 @@ requirejs.config({
     }
 });
 ```
-While defining your app,js
+While defining your app.js
 ```sh
 define(['knockout','kotable',function(ko){
 /* Your app code */
 }])
 ```
+## Todos
+
+ - Write Tests
+ - Add sort option
+ - Render HTML content in cell
+ - Serial number column as option
+
+## Development
+
+Want to contribute? Great!
+
+Knockout Table uses Gulp for fast developing.
+
+Open your favorite Terminal and run these commands.
+
+```sh
+$ git clone https://github.com/vaibhav93/knockout-table.git
+$ npm install
+```
+Make changes,add features and build by running
+```sh
+$ gulp
+```
+License
+----
+MIT
