@@ -39,6 +39,34 @@ define(['knockout','kotable',function(ko){
 /* Your app code */
 }])
 ```
+## How to Use
+```sh
+<ko-table params="list: persons, options: VMoptions"> </ko-table> 
+```
+<ko-table> component takes two arguments. An observable array on your view model to populate the table and an 'options' object on your view model to customize the table.
+```sh
+var viewModel = function(){
+    this.VMoptions = {
+        tableClass:'table table-striped',    //Optional. Specifies class for <table> tag
+        pageRecords: 5,                      //Optional. Number of records per page. 
+        columns:[                            //Optional.If not specfied all keys in your data will appear on table.
+            { 
+                key:'name',                  //Required if columns is specified.
+                name:'Name',        //Optional.This specifies table column header. If not given,key becomes header
+                filter:true                  //Optional. false if not specified.
+            },
+            { 
+                key:'address'                // key:'address', name:'address', filter:false
+            }
+        ]
+    };
+    this.persons = ko.observableArray([
+    { name:'Bob', address: 'New Delhi', dob:'14-03-1993'},
+    { name: 'Harry', address : 'Mumbai', dob:'10-07-1990'}
+    ]);
+}
+ko.applyBindings(new viewModel());
+```
 ## Todos
 
  - Write Tests
