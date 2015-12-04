@@ -17,7 +17,7 @@
             self.filter = {};
 
             //Array to store keys in user object array
-            self.listKeys = [];
+            self.listKeys = ko.observableArray([]);
 
             //Check if a column has filter enabled for it
             self.ifFilter = function (col) {
@@ -40,9 +40,20 @@
                             self.filter[col.key] = ko.observable("");
                         }
                     });
-                } else {
-                    var unwrappedArray = ko.utils.unwrapObservable(self.list);
-                    self.listKeys = Object.keys(unwrappedArray[0]);
+                } else { //if columns are not specified get a list of all keys present in user object
+                    //to form table headers
+                    self.list.subscribe(function (change) {
+                        var keys = [];
+                        if (change[0].status === 'added' && change[0].index == 0) {
+                            console.log('yay, I Ran');
+                            keys = Object.keys(change[0].value);
+                            ko.utils.arrayForEach(keys, function (key) {
+                                self.listKeys.push(key);
+                            });
+                        }
+                    }, null, "arrayChange");
+                    //                    var unwrappedArray = ko.utils.unwrapObservable(self.list);
+                    //                    self.listKeys = Object.keys(unwrappedArray[0]);
                 }
             }
 
