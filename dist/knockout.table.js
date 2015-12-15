@@ -7,7 +7,6 @@
         factory(ko);
     }
 }(function (ko) {
-
     ko.components.register('ko-table', {
         viewModel: function (params) {
             var self = this;
