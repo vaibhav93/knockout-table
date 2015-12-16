@@ -2,7 +2,7 @@ var PersonModel = function () {
     this.firstName = ko.observable("");
     this.options = {
         tableClass: 'table table-striped',
-        pageRecords: 5,
+        pageRecords: 4,
         columns: [
             {
                 key: 'id', // take data from this key in your object array

@@ -8,6 +8,7 @@ This plugin provides a powerful yet easy implementation of tables using knockout
 ### [Try out demo](http://vaibhav93.github.io/knockout-table/)
 ## Features
   - Provide table data from your viewModel (ObservableArray)
+  - Lazy load data for each page
   - Choose any number of keys from the objects on your array.
   - Reordering of columns
   - Specify column widths and headers
@@ -67,6 +68,37 @@ var viewModel = function(){
 }
 ko.applyBindings(new viewModel());
 ```
+### Lazy Load data
+Lazy loading requires user to define afunction on his viewModel which takes page number and Records per page as two arguments and returns a promise. In the background, this plugin fetches 3 pages ahead of the current page in order to improve performance.
+```sh
+<ko-table params="list: getPage, options: VMoptions"> </ko-table> 
+```
+```sh
+var viewModel = function(){
+    this.VMoptions = {
+        tableClass:'table table-striped',    //Optional. Specifies class for <table> tag
+        pageRecords: 5,                      //Optional. Number of records per page. 
+        columns: [
+            {
+                key: 'id', // take data from this key in your object array
+                name: 'ID', //name to display on column header
+                filter: true, //true or false. if not specified default:false
+                width: '' //optional col width in px or perc
+            },
+            {
+                key: 'email',
+                name: 'E-Mail',
+                filter: true
+            }
+        ]
+    };
+    this.getPage = function(pageNo,records){
+        return $.getJSON('http://nameless-sun-2869.getsandbox.com/sidemenu?pageNo='+pageNo+'&records='+records);
+    };
+}
+ko.applyBindings(new viewModel());
+```
+
 ## Todos
 
  - Write Tests

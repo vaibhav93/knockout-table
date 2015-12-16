@@ -7,6 +7,13 @@
         factory(ko);
     }
 }(function (ko) {
+    ko.observableArray.fn.pushAll = function (valuesToPush) {
+        var underlyingArray = this();
+        this.valueWillMutate();
+        ko.utils.arrayPushAll(underlyingArray, valuesToPush);
+        this.valueHasMutated();
+        return this; //optional
+    };
     ko.components.register('ko-table', {
         viewModel: function (params) {
             var self = this;
@@ -19,6 +26,9 @@
                 self.list = params.list;
 
             } else { //loazyload data
+                $.whenall = function (arr) {
+                    return $.when.apply($, arr);
+                };
                 self.list = ko.observableArray([]);
                 self.currentPage.subscribe(function (newPage) {
                     console.log(newPage);
