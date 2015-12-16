@@ -18,8 +18,10 @@ This plugin provides a powerful yet easy implementation of tables using knockout
   - AMD (Require.js) compatible
 
 ## Installation
+Lazy Loading feature requires Jquery to be loaded prior to the ko.table
 #### Option 1
 ```sh
+<script src="js/jquery.js"></script>   <!-- if LazyLoading is required -->
 <script src="js/knockout.js"></script> 
 <script src="js/knockout.table.min.js"></script> 
 ```
@@ -28,15 +30,16 @@ In your requirejs config, include plugin in path
 ```sh
 requirejs.config({
     paths:{
-    knockout: 'js/lib/knockout.min'
-    kotable: 'js/lib/knockout.table.min'
+    knockout: 'js/lib/knockout.min',
+    kotable: 'js/lib/knockout.table.min',
+    jquery: 'js/lib/jquery.js'
     ...
     }
 });
 ```
 While defining your app.js
 ```sh
-define(['knockout','kotable',function(ko){
+define(['jquery','knockout','kotable',function($,ko){
 /* Your app code */
 }])
 ```
