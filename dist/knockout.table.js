@@ -10,8 +10,56 @@
     ko.components.register('ko-table', {
         viewModel: function (params) {
             var self = this;
-            self.list = params.list;
+            //current active page
+            self.currentPage = ko.observable(1);
+            var EODpage; //end of data
+            var fetchedTillPage = null;
 
+            if (ko.isObservable(params.list) || Array.isArray(params.list)) {
+                self.list = params.list;
+
+            } else { //loazyload data
+                self.list = ko.observableArray([]);
+                self.currentPage.subscribe(function (newPage) {
+                    console.log(newPage);
+                    self.lazyloadData();
+                });
+                var bgData = [];
+                params.list(self.currentPage(), params.options.pageRecords).then(function (res) {
+                    self.list(res);
+                    self.lazyloadData();
+                });
+            }
+
+
+            self.lazyloadData = function () {
+                var lazyloadPromises = [];
+                var currentPage = self.currentPage();
+                var noOfPagesToLoad;
+                if (!fetchedTillPage) {
+                    noOfPagesToLoad = 3;
+                    fetchedTillPage = 1;
+                } else
+                    noOfPagesToLoad = 3 - (fetchedTillPage - currentPage);
+                console.log('fetched till: ' + fetchedTillPage);
+                for (i = 1; i <= noOfPagesToLoad; i++)
+                    lazyloadPromises.push(params.list(fetchedTillPage + i, params.options.pageRecords));
+                console.log(lazyloadPromises);
+                $.whenall(lazyloadPromises).then(function () {
+                    var i;
+                    if (typeof arguments[1] === 'string') {
+                        self.list.pushAll(arguments[0]);
+                        i = 1;
+                    } else {
+                        for (i = 0; i < arguments.length; i++) {
+                            self.list.pushAll(arguments[i][0]);
+                        }
+                    }
+
+                    fetchedTillPage = fetchedTillPage + i;
+                });
+
+            };
             //object to hold observables for filter inputs
             self.filter = {};
 
@@ -72,9 +120,6 @@
                     return "";
             };
 
-            //current active page
-            self.currentPage = ko.observable(1);
-
             //total number of pages according to no. of records per page.
             self.totalPages = ko.computed(function () {
                 return Math.ceil(self.list().length / params.options.pageRecords);
@@ -118,7 +163,7 @@
                 return ko.utils.arrayFilter(self.list(), function (item) {
                     for (var prop in self.filter) {
                         var value;
-                        if(ko.isObservable(item[prop]))
+                        if (ko.isObservable(item[prop]))
                             value = item[prop]();
                         else
                             value = item[prop];
