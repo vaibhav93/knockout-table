@@ -9,13 +9,21 @@ var PersonModel = function () {
                 name: 'ID', //name to display on column header
                 filter: true, //true or false. if not specified default:false
                 width: '' //optional col width in px or perc
-                    },
+            },
             {
                 key: 'email',
                 name: 'E-Mail',
                 filter: true
-                    }
-                ]
+            },
+            {
+                key: 'registered',
+                name: 'Date',
+                filter: true
+            }
+        ]
+    };
+    this.getPage = function (pageNo, records) {
+        return $.getJSON('http://nameless-sun-2869.getsandbox.com/sidemenu?pageNo=' + pageNo + '&records=' + records)
     };
     this.people = ko.observableArray(
     [

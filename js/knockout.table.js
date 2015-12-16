@@ -7,17 +7,74 @@
         factory(ko);
     }
 }(function (ko) {
-
+    ko.observableArray.fn.pushAll = function (valuesToPush) {
+        var underlyingArray = this();
+        this.valueWillMutate();
+        ko.utils.arrayPushAll(underlyingArray, valuesToPush);
+        this.valueHasMutated();
+        return this; //optional
+    };
     ko.components.register('ko-table', {
         viewModel: function (params) {
             var self = this;
-            self.list = params.list;
+            //current active page
+            self.currentPage = ko.observable(1);
+            var EODpage; //end of data
+            var fetchedTillPage = null;
 
+            if (ko.isObservable(params.list) || Array.isArray(params.list)) {
+                self.list = params.list;
+
+            } else { //loazyload data
+                $.whenall = function (arr) {
+                    return $.when.apply($, arr);
+                };
+                self.list = ko.observableArray([]);
+                self.currentPage.subscribe(function (newPage) {
+                    console.log(newPage);
+                    self.lazyloadData();
+                });
+                var bgData = [];
+                params.list(self.currentPage(), params.options.pageRecords).then(function (res) {
+                    self.list(res);
+                    self.lazyloadData();
+                });
+            }
+
+
+            self.lazyloadData = function () {
+                var lazyloadPromises = [];
+                var currentPage = self.currentPage();
+                var noOfPagesToLoad;
+                if (!fetchedTillPage) {
+                    noOfPagesToLoad = 3;
+                    fetchedTillPage = 1;
+                } else
+                    noOfPagesToLoad = 3 - (fetchedTillPage - currentPage);
+                console.log('fetched till: ' + fetchedTillPage);
+                for (i = 1; i <= noOfPagesToLoad; i++)
+                    lazyloadPromises.push(params.list(fetchedTillPage + i, params.options.pageRecords));
+                console.log(lazyloadPromises);
+                $.whenall(lazyloadPromises).then(function () {
+                    var i;
+                    if (typeof arguments[1] === 'string') {
+                        self.list.pushAll(arguments[0]);
+                        i = 1;
+                    } else {
+                        for (i = 0; i < arguments.length; i++) {
+                            self.list.pushAll(arguments[i][0]);
+                        }
+                    }
+
+                    fetchedTillPage = fetchedTillPage + i;
+                });
+
+            };
             //object to hold observables for filter inputs
             self.filter = {};
 
             //Array to store keys in user object array
-            self.listKeys = [];
+            self.listKeys = ko.observableArray([]);
 
             //Check if a column has filter enabled for it
             self.ifFilter = function (col) {
@@ -39,12 +96,23 @@
                         if (self.ifFilter(col)) {
                             self.filter[col.key] = ko.observable("");
                         }
-                    })
-                } else {
-                    var unwrappedArray = ko.utils.unwrapObservable(self.list);
-                    self.listKeys = Object.keys(unwrappedArray[0]);
+                    });
+                } else { //if columns are not specified get a list of all keys present in user object
+                    //to form table headers
+                    self.list.subscribe(function (change) {
+                        var keys = [];
+                        if (change[0].status === 'added' && change[0].index === 0) {
+                            console.log('yay, I Ran');
+                            keys = Object.keys(change[0].value);
+                            ko.utils.arrayForEach(keys, function (key) {
+                                self.listKeys.push(key);
+                            });
+                        }
+                    }, null, "arrayChange");
+                    //                    var unwrappedArray = ko.utils.unwrapObservable(self.list);
+                    //                    self.listKeys = Object.keys(unwrappedArray[0]);
                 }
-            };
+            }
 
             //width of column
             self.getWidth = function (col) {
@@ -52,7 +120,7 @@
                     return col.width;
                 else
                     return "";
-            }
+            };
 
             //<table> css class
             self.getTableClass = function () {
@@ -60,10 +128,7 @@
                     return params.options.tableClass;
                 else
                     return "";
-            }
-
-            //current active page
-            self.currentPage = ko.observable(1);
+            };
 
             //total number of pages according to no. of records per page.
             self.totalPages = ko.computed(function () {
@@ -84,12 +149,12 @@
 
             //current pagination list
             self.currentPaginationList = ko.computed(function () {
-                var currentPage = ((self.currentPage / 4) % 1 == 0) ? self.currentPage() : (self.currentPage() - 1);
+                var currentPage = ((self.currentPage / 4) % 1 === 0) ? self.currentPage() : (self.currentPage() - 1);
                 var bottom = Math.floor(currentPage / 4) * 4;
                 var top = bottom + 5;
                 if (top > self.totalPages())
                     top = self.totalPages() + 1;
-                var list = []
+                var list = [];
                 for (var i = bottom + 1; i < top; i++)
                     list.push(i);
                 return list;
@@ -98,7 +163,7 @@
             self.gotoNextPagination = function () {
                 var currentPage = self.currentPage();
                 var bottom = Math.floor(currentPage / 5) * 5;
-                if (bottom == 0)
+                if (bottom === 0)
                     bottom++;
                 self.currentPage(bottom + 4);
             };
@@ -106,15 +171,20 @@
             //filtered list of records
             self.filteredItems = ko.computed(function () {
                 return ko.utils.arrayFilter(self.list(), function (item) {
-                    for (prop in self.filter) {
+                    for (var prop in self.filter) {
+                        var value;
+                        if (ko.isObservable(item[prop]))
+                            value = item[prop]();
+                        else
+                            value = item[prop];
                         var filter = self.filter[prop]();
                         if (filter.length > 0) {
-                            if (item[prop].toLowerCase().indexOf(filter) < 0)
+                            if (value.toLowerCase().indexOf(filter) < 0)
                                 return false;
                         }
                     }
                     return true;
-                })
+                });
             });
 
             //list for records displayed on current active page
@@ -127,7 +197,7 @@
                     return self.filteredItems().slice(begin, end);
                 }
                 return self.filteredItems();
-            })
+            });
 
         },
         template: '<table style="width:100%" data-bind="css:getTableClass()">\
@@ -186,6 +256,6 @@
                     </li>\
                 </ul>\
             </div>'
-    })
+    });
 
 }));
