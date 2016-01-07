@@ -16,22 +16,24 @@
     };
     ko.bindingHandlers.selectable = {
         init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-            var value = valueAccessor();
-            var valueUnwrapped = ko.unwrap(value);
+//            var value = valueAccessor();
+//            var valueUnwrapped = ko.unwrap(value);
+            if(bindingContext.$parent.selectedRows.indexOf(bindingContext.$data)!= -1)
+                $(element).addClass('selected');
             $(element).click(function () {
                 $(this).toggleClass('selected');
                 var currentPage = bindingContext.$parent.currentPage();
                 var pageRecords = $(this).parent("tbody").children().length;
                 var tableIndex = $("tr", $(this).closest("tbody")).index(this);
-                var listIndex = (currentPage-1)*pageRecords + tableIndex;
+                var listIndex = (currentPage - 1) * pageRecords + tableIndex;
                 var value = bindingContext.$parent.list()[listIndex];
-                bindingContext.$parent.selectedRows.indexOf(value)<0 ? (bindingContext.$parent.selectedRows.push(value)) : (bindingContext.$parent.selectedRows.remove(value));
+                bindingContext.$parent.selectedRows.indexOf(value) < 0 ? (bindingContext.$parent.selectedRows.push(value)) : (bindingContext.$parent.selectedRows.remove(value));
                 console.log(bindingContext.$parent.selectedRows());
             });
 
         },
         update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-            //console.log(bindingContext.$parents);
+//            console.log(bindingContext.$parent.pageList().indexOf(bindingContext.$data));
         }
     };
     ko.components.register('ko-table', {
@@ -56,7 +58,7 @@
                 };
                 self.list = ko.observableArray([]);
                 self.currentPage.subscribe(function (newPage) {
-                    console.log(newPage);
+//                    console.log(newPage);
                     self.lazyloadData();
                 });
                 var bgData = [];
