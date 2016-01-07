@@ -26,7 +26,7 @@ gulp.task('watchDIST',function(){
 })
 
 gulp.task('toDEMO',function(){
-    return gulp.src('dist/*js')
+    return gulp.src('dist/*.js')
         .pipe(gulp.dest('demo/js'));
 });
 

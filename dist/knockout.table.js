@@ -22,9 +22,11 @@
             var EODpage; //end of data
             var fetchedTillPage = null;
 
+            //Array to store keys in user object array
+            self.listKeys = ko.observableArray([]);
+
             if (ko.isObservable(params.list) || Array.isArray(params.list)) {
                 self.list = params.list;
-
             } else { //loazyload data
                 $.whenall = function (arr) {
                     return $.when.apply($, arr);
@@ -73,9 +75,6 @@
             //object to hold observables for filter inputs
             self.filter = {};
 
-            //Array to store keys in user object array
-            self.listKeys = ko.observableArray([]);
-
             //Check if a column has filter enabled for it
             self.ifFilter = function (col) {
                 if (col.hasOwnProperty("filter")) {
@@ -99,18 +98,22 @@
                     });
                 } else { //if columns are not specified get a list of all keys present in user object
                     //to form table headers
-                    self.list.subscribe(function (change) {
-                        var keys = [];
-                        if (change[0].status === 'added' && change[0].index === 0) {
-                            console.log('yay, I Ran');
-                            keys = Object.keys(change[0].value);
-                            ko.utils.arrayForEach(keys, function (key) {
-                                self.listKeys.push(key);
-                            });
-                        }
-                    }, null, "arrayChange");
-                    //                    var unwrappedArray = ko.utils.unwrapObservable(self.list);
-                    //                    self.listKeys = Object.keys(unwrappedArray[0]);
+                    if (ko.isObservable(params.list) || Array.isArray(params.list)) {
+                        self.listKeys = Object.keys(self.list()[0]);
+                        console.log(self.listKeys);
+                    } else {
+                        self.list.subscribe(function (change) {
+                            var keys = [];
+                            if (change[0].status === 'added' && change[0].index === 0) {
+                                console.log('yay, I Ran');
+                                keys = Object.keys(change[0].value);
+                                ko.utils.arrayForEach(keys, function (key) {
+                                    self.listKeys.push(key);
+                                });
+                            }
+                        }, null, "arrayChange");
+                    }
+
                 }
             }
 
@@ -191,12 +194,17 @@
             self.pageList = ko.computed(function () {
 
                 if (params.options.hasOwnProperty("pageRecords")) {
+//                    console.log('page recored present');
                     var pageRecords = params.options.pageRecords;
                     var begin = (self.currentPage() - 1) * pageRecords;
                     var end = begin + pageRecords;
+                    console.log('begin:'+begin+' end:'+end);
+                    console.log(self.filteredItems().slice(begin, end));
                     return self.filteredItems().slice(begin, end);
+                }else{
+                    return self.filteredItems();    
                 }
-                return self.filteredItems();
+                
             });
 
         },
@@ -230,7 +238,7 @@
                     </tbody>\
                 </div>\
                 <div data-bind="if: !options.hasOwnProperty(&quot;columns&quot;)">\
-                    <tbody data-bind="foreach: list">\
+                    <tbody data-bind="foreach: pageList">\
                         <tr data-bind="foreach: $parent.listKeys">\
                             <td data-bind="text: $parentContext.$data[$data]"></td>\
                         </tr>\
