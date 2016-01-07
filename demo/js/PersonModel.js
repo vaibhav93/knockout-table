@@ -1,21 +1,21 @@
 var PersonModel = function () {
     this.firstName = ko.observable("");
     this.options = {
-        tableClass: 'table table-striped',
+        tableClass: 'table table-hover',
         pageRecords: 5,
-//        columns: [
-//            {
-//                key: 'id', // take data from this key in your object array
-//                name: 'ID', //name to display on column header
-//                filter: true, //true or false. if not specified default:false
-//                width: '' //optional col width in px or perc
-//            },
-//            {
-//                key: 'email',
-//                name: 'E-Mail',
-//                filter: true
-//            }
-//        ]
+        columns: [
+            {
+                key: 'id', // take data from this key in your object array
+                name: 'ID', //name to display on column header
+                filter: true, //true or false. if not specified default:false
+                width: '' //optional col width in px or perc
+            },
+            {
+                key: 'email',
+                name: 'E-Mail',
+                filter: true
+            }
+        ]
     };
     this.getPage = function(pageNo,records){
         return $.getJSON('http://nameless-sun-2869.getsandbox.com/sidemenu?pageNo='+pageNo+'&records='+records)

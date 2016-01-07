@@ -12,3 +12,6 @@
     background-color: lightsalmon;
         
 }
+.selected{
+    background-color: #acbad4 !important;
+}

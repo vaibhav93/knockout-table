@@ -14,6 +14,26 @@
         this.valueHasMutated();
         return this; //optional
     };
+    ko.bindingHandlers.selectable = {
+        init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+            var value = valueAccessor();
+            var valueUnwrapped = ko.unwrap(value);
+            $(element).click(function () {
+                $(this).toggleClass('selected');
+                var currentPage = bindingContext.$parent.currentPage();
+                var pageRecords = $(this).parent("tbody").children().length;
+                var tableIndex = $("tr", $(this).closest("tbody")).index(this);
+                var listIndex = (currentPage-1)*pageRecords + tableIndex;
+                var value = bindingContext.$parent.list()[listIndex];
+                bindingContext.$parent.selectedRows.indexOf(value)<0 ? (bindingContext.$parent.selectedRows.push(value)) : (bindingContext.$parent.selectedRows.remove(value));
+                console.log(bindingContext.$parent.selectedRows());
+            });
+
+        },
+        update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+            //console.log(bindingContext.$parents);
+        }
+    };
     ko.components.register('ko-table', {
         viewModel: function (params) {
             var self = this;
@@ -21,6 +41,9 @@
             self.currentPage = ko.observable(1);
             var EODpage; //end of data
             var fetchedTillPage = null;
+
+            //Selected rows
+            self.selectedRows = ko.observableArray([]);
 
             //Array to store keys in user object array
             self.listKeys = ko.observableArray([]);
@@ -53,10 +76,10 @@
                     fetchedTillPage = 1;
                 } else
                     noOfPagesToLoad = 3 - (fetchedTillPage - currentPage);
-                console.log('fetched till: ' + fetchedTillPage);
+                //                console.log('fetched till: ' + fetchedTillPage);
                 for (i = 1; i <= noOfPagesToLoad; i++)
                     lazyloadPromises.push(params.list(fetchedTillPage + i, params.options.pageRecords));
-                console.log(lazyloadPromises);
+                //                console.log(lazyloadPromises);
                 $.whenall(lazyloadPromises).then(function () {
                     var i;
                     if (typeof arguments[1] === 'string') {
@@ -194,17 +217,15 @@
             self.pageList = ko.computed(function () {
 
                 if (params.options.hasOwnProperty("pageRecords")) {
-//                    console.log('page recored present');
+                    //                    console.log('page recored present');
                     var pageRecords = params.options.pageRecords;
                     var begin = (self.currentPage() - 1) * pageRecords;
                     var end = begin + pageRecords;
-                    console.log('begin:'+begin+' end:'+end);
-                    console.log(self.filteredItems().slice(begin, end));
                     return self.filteredItems().slice(begin, end);
-                }else{
-                    return self.filteredItems();    
+                } else {
+                    return self.filteredItems();
                 }
-                
+
             });
 
         },
@@ -232,14 +253,14 @@
                 </thead>\
                 <div data-bind="if: options.hasOwnProperty(&quot;columns&quot;)">\
                     <tbody data-bind="foreach: pageList">\
-                        <tr data-bind="foreach: $parent.options.columns">\
+                        <tr data-bind="foreach: $parent.options.columns,selectable:true">\
                             <td data-bind="text: $parentContext.$data[$data.key]"></td>\
                         </tr>\
                     </tbody>\
                 </div>\
                 <div data-bind="if: !options.hasOwnProperty(&quot;columns&quot;)">\
                     <tbody data-bind="foreach: pageList">\
-                        <tr data-bind="foreach: $parent.listKeys">\
+                        <tr data-bind="foreach: $parent.listKeys,selectable:true">\
                             <td data-bind="text: $parentContext.$data[$data]"></td>\
                         </tr>\
                     </tbody>\
