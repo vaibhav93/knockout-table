@@ -15,6 +15,7 @@ This plugin provides a powerful yet easy implementation of tables using knockout
   - Filter columns
   - Custom css classes for tables and rows so that you can customize according to your CSS framework
   - Pagination
+  - Multiselect rows
   - AMD (Require.js) compatible
 
 ## Installation
@@ -52,7 +53,8 @@ define(['jquery','knockout','kotable',function($,ko){
 var viewModel = function(){
     this.VMoptions = {
         tableClass:'table table-striped',    //Optional. Specifies class for <table> tag
-        pageRecords: 5,                      //Optional. Number of records per page. 
+        pageRecords: 5,                      //Optional. Number of records per page.
+        selectable: true,                    //Optional. Multiselect rows. Defaults to false
         columns:[                            //Optional.If not specfied all keys in your data will appear on table.
             { 
                 key:'name',                  //Required if columns is specified.
