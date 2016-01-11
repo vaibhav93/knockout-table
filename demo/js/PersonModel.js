@@ -2,6 +2,7 @@ var PersonModel = function () {
     this.firstName = ko.observable("");
     this.options = {
         tableClass: 'table table-hover',
+        selectable: true,
         pageRecords: 5,
         columns: [
             {

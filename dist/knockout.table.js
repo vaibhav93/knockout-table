@@ -16,21 +16,26 @@
     };
     ko.bindingHandlers.selectable = {
         init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-//            var value = valueAccessor();
-//            var valueUnwrapped = ko.unwrap(value);
+            var value = valueAccessor();
+            var valueUnwrapped = ko.unwrap(value);
+            if(valueUnwrapped){
+                
+            
             if(bindingContext.$parent.selectedRows.indexOf(bindingContext.$data)!= -1)
                 $(element).addClass('selected');
             $(element).click(function () {
                 $(this).toggleClass('selected');
-                var currentPage = bindingContext.$parent.currentPage();
-                var pageRecords = $(this).parent("tbody").children().length;
-                var tableIndex = $("tr", $(this).closest("tbody")).index(this);
-                var listIndex = (currentPage - 1) * pageRecords + tableIndex;
-                var value = bindingContext.$parent.list()[listIndex];
-                bindingContext.$parent.selectedRows.indexOf(value) < 0 ? (bindingContext.$parent.selectedRows.push(value)) : (bindingContext.$parent.selectedRows.remove(value));
+//                var currentPage = bindingContext.$parent.currentPage();
+//                var pageRecords = $(this).parent("tbody").children().length;
+//                var tableIndex = $("tr", $(this).closest("tbody")).index(this);
+//                var listIndex = (currentPage - 1) * pageRecords + tableIndex;
+//                var value = bindingContext.$parent.list()[listIndex];
+                bindingContext.$parent.selectedRows.indexOf(bindingContext.$data) < 0 ? (bindingContext.$parent.selectedRows.push(bindingContext.$data)) : (bindingContext.$parent.selectedRows.remove(bindingContext.$data));
                 console.log(bindingContext.$parent.selectedRows());
             });
-
+            }
+            else
+                return;
         },
         update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
 //            console.log(bindingContext.$parent.pageList().indexOf(bindingContext.$data));
@@ -255,14 +260,14 @@
                 </thead>\
                 <div data-bind="if: options.hasOwnProperty(&quot;columns&quot;)">\
                     <tbody data-bind="foreach: pageList">\
-                        <tr data-bind="foreach: $parent.options.columns,selectable:true">\
+                        <tr data-bind="foreach: $parent.options.columns,selectable:$parent.options.selectable">\
                             <td data-bind="text: $parentContext.$data[$data.key]"></td>\
                         </tr>\
                     </tbody>\
                 </div>\
                 <div data-bind="if: !options.hasOwnProperty(&quot;columns&quot;)">\
                     <tbody data-bind="foreach: pageList">\
-                        <tr data-bind="foreach: $parent.listKeys,selectable:true">\
+                        <tr data-bind="foreach: $parent.listKeys,selectable:$parent.options.selectable">\
                             <td data-bind="text: $parentContext.$data[$data]"></td>\
                         </tr>\
                     </tbody>\
