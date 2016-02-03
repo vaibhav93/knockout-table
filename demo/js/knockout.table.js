@@ -234,6 +234,14 @@
                 }
 
             });
+            self.getTemplate = function(column,bindingContext){
+//                console.log(column);
+                if(!column.hasOwnProperty("html") || !column.html)
+                    return 'textTmpl';
+                else {
+                    return column.key;
+                }
+            };
 
         },
         template: '<table style="width:100%" data-bind="css:getTableClass()">\
@@ -261,7 +269,7 @@
                 <div data-bind="if: options.hasOwnProperty(&quot;columns&quot;)">\
                     <tbody data-bind="foreach: pageList">\
                         <tr data-bind="foreach: $parent.options.columns,selectable:$parent.options.selectable">\
-                            <td data-bind="text: $parentContext.$data[$data.key]"></td>\
+                                <td data-bind="template:{name: $parents[1].getTemplate($data),data:{value:$parentContext.$data[$data.key]}}"></td>\
                         </tr>\
                     </tbody>\
                 </div>\
@@ -291,7 +299,10 @@
                     </a>\
                     </li>\
                 </ul>\
-            </div>'
+            </div>\
+            <script id="textTmpl" type="text/html">\
+               <div data-bind="text: value"></div>\
+            </script>'
     });
 
 }));

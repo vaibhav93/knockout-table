@@ -2,7 +2,7 @@ var PersonModel = function () {
     this.firstName = ko.observable("");
     this.options = {
         tableClass: 'table table-hover',
-        selectable: true,
+        selectable: false,
         pageRecords: 5,
         columns: [
             {
@@ -15,6 +15,11 @@ var PersonModel = function () {
                 key: 'email',
                 name: 'E-Mail',
                 filter: true
+            },
+            {
+                key: 'html-template',
+                name: 'Remove',
+                html:true
             }
         ]
     };
