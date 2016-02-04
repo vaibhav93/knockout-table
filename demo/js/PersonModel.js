@@ -19,6 +19,7 @@ var PersonModel = function () {
             {
                 key: 'html-template',
                 name: 'Remove',
+                class: 'hidden-xs',
                 html:true
             }
         ]
