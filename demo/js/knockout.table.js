@@ -269,7 +269,7 @@
                 <div data-bind="if: options.hasOwnProperty(&quot;columns&quot;)">\
                     <tbody data-bind="foreach: pageList">\
                         <tr data-bind="foreach: $parent.options.columns,selectable:$parent.options.selectable">\
-                                <td data-bind="template:{name: $parents[1].getTemplate($data),data:{value:$parentContext.$data[$data.key]}},css:$data.class"></td>\
+                                <td data-bind="template:{name: $parents[1].getTemplate($data),data:{row:$parentContext.$data,key:$data.key}},css:$data.class"></td>\
                         </tr>\
                     </tbody>\
                 </div>\
@@ -301,7 +301,7 @@
                 </ul>\
             </div>\
             <script id="textTmpl" type="text/html">\
-               <div data-bind="text: value"></div>\
+               <div data-bind="text: row[key]"></div>\
             </script>'
     });
 
