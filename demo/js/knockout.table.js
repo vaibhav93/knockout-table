@@ -18,27 +18,26 @@
         init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
             var value = valueAccessor();
             var valueUnwrapped = ko.unwrap(value);
-            if(valueUnwrapped){
-                
-            
-            if(bindingContext.$parent.selectedRows.indexOf(bindingContext.$data)!= -1)
-                $(element).addClass('selected');
-            $(element).click(function () {
-                $(this).toggleClass('selected');
-//                var currentPage = bindingContext.$parent.currentPage();
-//                var pageRecords = $(this).parent("tbody").children().length;
-//                var tableIndex = $("tr", $(this).closest("tbody")).index(this);
-//                var listIndex = (currentPage - 1) * pageRecords + tableIndex;
-//                var value = bindingContext.$parent.list()[listIndex];
-                bindingContext.$parent.selectedRows.indexOf(bindingContext.$data) < 0 ? (bindingContext.$parent.selectedRows.push(bindingContext.$data)) : (bindingContext.$parent.selectedRows.remove(bindingContext.$data));
-                console.log(bindingContext.$parent.selectedRows());
-            });
-            }
-            else
+            if (valueUnwrapped) {
+
+
+                if (bindingContext.$parent.selectedRows.indexOf(bindingContext.$data) != -1)
+                    $(element).addClass('selected');
+                $(element).click(function () {
+                    $(this).toggleClass('selected');
+                    //                var currentPage = bindingContext.$parent.currentPage();
+                    //                var pageRecords = $(this).parent("tbody").children().length;
+                    //                var tableIndex = $("tr", $(this).closest("tbody")).index(this);
+                    //                var listIndex = (currentPage - 1) * pageRecords + tableIndex;
+                    //                var value = bindingContext.$parent.list()[listIndex];
+                    bindingContext.$parent.selectedRows.indexOf(bindingContext.$data) < 0 ? (bindingContext.$parent.selectedRows.push(bindingContext.$data)) : (bindingContext.$parent.selectedRows.remove(bindingContext.$data));
+                    console.log(bindingContext.$parent.selectedRows());
+                });
+            } else
                 return;
         },
         update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-//            console.log(bindingContext.$parent.pageList().indexOf(bindingContext.$data));
+            //            console.log(bindingContext.$parent.pageList().indexOf(bindingContext.$data));
         }
     };
     ko.components.register('ko-table', {
@@ -63,7 +62,7 @@
                 };
                 self.list = ko.observableArray([]);
                 self.currentPage.subscribe(function (newPage) {
-//                    console.log(newPage);
+                    //                    console.log(newPage);
                     self.lazyloadData();
                 });
                 var bgData = [];
@@ -211,8 +210,9 @@
                         else
                             value = item[prop];
                         var filter = self.filter[prop]();
+                        filter = filter.toLowerCase();
                         if (filter.length > 0) {
-                            if (value.toLowerCase().indexOf(filter) < 0)
+                            if (value.toString().toLowerCase().indexOf(filter) < 0)
                                 return false;
                         }
                     }
@@ -234,9 +234,9 @@
                 }
 
             });
-            self.getTemplate = function(column,bindingContext){
-//                console.log(column);
-                if(!column.hasOwnProperty("html") || !column.html)
+            self.getTemplate = function (column, bindingContext) {
+                //                console.log(column);
+                if (!column.hasOwnProperty("html") || !column.html)
                     return 'textTmpl';
                 else {
                     return column.key;
