@@ -4,6 +4,7 @@ var PersonModel = function () {
         tableClass: 'table table-hover',
         selectable: false,
         pageRecords: 5,
+        responsive:false,
         columns: [
             {
                 key: 'id', // take data from this key in your object array
@@ -17,9 +18,14 @@ var PersonModel = function () {
                 filter: true
             },
             {
+                key: 'address.state',
+                name: 'State',
+                filter: true
+            },
+            {
                 key: 'html-template',
                 name: 'Remove',
-                class: 'hidden-xs',
+//                class: 'hidden-xs',
                 html:true
             }
         ]
@@ -32,152 +38,242 @@ var PersonModel = function () {
             {
                 id: '1223',
                 email: 'vaibhav.b.bansal@gmail.com',
-                added: '12/10/2015'
+                added: '12/10/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '4533',
                 email: 'nitesh.kumar@gmail.com',
-                added: '24/11/2015'
+                added: '24/11/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '8697',
                 email: 'abhisek.parida@gmail.com',
-                added: '22/09/2015'
+                added: '22/09/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9878',
                 email: 'saurabh.sahu@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9877',
                 email: 'sourav.poddar@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '1223',
                 email: 'vaibhav.b.bansal@gmail.com',
-                added: '12/10/2015'
+                added: '12/10/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '4533',
                 email: 'nitesh.kumar@gmail.com',
-                added: '24/11/2015'
+                added: '24/11/2015',
+                address:{
+                    state:'Maharashtra'
+                }                
             },
             {
                 id: '8697',
                 email: 'abhisek.parida@gmail.com',
-                added: '22/09/2015'
+                added: '22/09/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9878',
                 email: 'saurabh.sahu@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9877',
                 email: 'sourav.poddar@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '1223',
                 email: 'vaibhav.b.bansal@gmail.com',
-                added: '12/10/2015'
+                added: '12/10/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '4533',
                 email: 'nitesh.kumar@gmail.com',
-                added: '24/11/2015'
+                added: '24/11/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '8697',
                 email: 'abhisek.parida@gmail.com',
-                added: '22/09/2015'
+                added: '22/09/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9878',
                 email: 'saurabh.sahu@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9877',
                 email: 'sourav.poddar@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '1223',
                 email: 'vaibhav.b.bansal@gmail.com',
-                added: '12/10/2015'
+                added: '12/10/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '4533',
                 email: 'nitesh.kumar@gmail.com',
-                added: '24/11/2015'
+                added: '24/11/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '8697',
                 email: 'abhisek.parida@gmail.com',
-                added: '22/09/2015'
+                added: '22/09/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9878',
                 email: 'saurabh.sahu@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9877',
                 email: 'sourav.poddar@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '1223',
                 email: 'vaibhav.b.bansal@gmail.com',
-                added: '12/10/2015'
+                added: '12/10/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '4533',
                 email: 'nitesh.kumar@gmail.com',
-                added: '24/11/2015'
+                added: '24/11/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '8697',
                 email: 'abhisek.parida@gmail.com',
-                added: '22/09/2015'
+                added: '22/09/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9878',
                 email: 'saurabh.sahu@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9877',
                 email: 'sourav.poddar@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '1223',
                 email: 'vaibhav.b.bansal@gmail.com',
-                added: '12/10/2015'
+                added: '12/10/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '4533',
                 email: 'nitesh.kumar@gmail.com',
-                added: '24/11/2015'
+                added: '24/11/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '8697',
                 email: 'abhisek.parida@gmail.com',
-                added: '22/09/2015'
+                added: '22/09/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9878',
                 email: 'saurabh.sahu@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             },
             {
                 id: '9877',
                 email: 'sourav.poddar@gmail.com',
-                added: '11/12/2015'
+                added: '11/12/2015',
+                address:{
+                    state:'Maharashtra'
+                }
             }
     ]
     );

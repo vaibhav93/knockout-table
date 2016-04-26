@@ -234,6 +234,12 @@
                 }
 
             });
+            self.getResponsiveClass = function(){
+                if (params.options.hasOwnProperty("responsive") && params.options.responsive)
+                    return "table-responsive";
+                else
+                    return "";
+            };
             self.getTemplate = function (column, bindingContext) {
                 //                console.log(column);
                 if (!column.hasOwnProperty("html") || !column.html)
@@ -244,43 +250,45 @@
             };
 
         },
-        template: '<table style="width:100%" data-bind="css:getTableClass()">\
-                <thead>\
+        template: '<div data-bind="css:getResponsiveClass()">\
+                    <table style="width:100%" data-bind="css:getTableClass()">\
+                    <thead>\
+                        <div data-bind="if: options.hasOwnProperty(&quot;columns&quot;)">\
+                            <tr data-bind="foreach:options.columns">\
+                                <th data-bind="attr:{width:$parent.getWidth($data)},css:$data.class">\
+                                    <span data-bind="text: $data.hasOwnProperty(&quot;name&quot;)?$data.name:$data.key"></span></th>\
+                            </tr>\
+                            <tr data-bind="foreach:options.columns">\
+                                <th data-bind="css:$data.class">\
+                                    <div data-bind="if : $parent.ifFilter($data)">\
+                                        <input data-bind="textInput: $parent.filter[$data.key]">\
+                                    <div>\
+                                </th>\
+                            </tr>\
+                        </div>\
+                        <div data-bind="if: !options.hasOwnProperty(&quot;columns&quot;)">\
+                            <tr data-bind="foreach:listKeys">\
+                                <th>\
+                                    <span data-bind="text: $data"></span></th>\
+                            </tr>\
+                        </div>\
+                    </thead>\
                     <div data-bind="if: options.hasOwnProperty(&quot;columns&quot;)">\
-                        <tr data-bind="foreach:options.columns">\
-                            <th data-bind="attr:{width:$parent.getWidth($data)},css:$data.class">\
-                                <span data-bind="text: $data.hasOwnProperty(&quot;name&quot;)?$data.name:$data.key"></span></th>\
-                        </tr>\
-                        <tr data-bind="foreach:options.columns">\
-                            <th data-bind="css:$data.class">\
-                                <div data-bind="if : $parent.ifFilter($data)">\
-                                    <input data-bind="textInput: $parent.filter[$data.key]">\
-                                <div>\
-                            </th>\
-                        </tr>\
+                        <tbody data-bind="foreach: pageList">\
+                            <tr data-bind="foreach: $parent.options.columns,selectable:$parent.options.selectable">\
+                                    <td data-bind="template:{name: $parents[1].getTemplate($data),data:{row:$parentContext.$data,key:$data.key}},css:$data.class"></td>\
+                            </tr>\
+                        </tbody>\
                     </div>\
                     <div data-bind="if: !options.hasOwnProperty(&quot;columns&quot;)">\
-                        <tr data-bind="foreach:listKeys">\
-                            <th>\
-                                <span data-bind="text: $data"></span></th>\
-                        </tr>\
+                        <tbody data-bind="foreach: pageList">\
+                            <tr data-bind="foreach: $parent.listKeys,selectable:$parent.options.selectable">\
+                                <td data-bind="text: $parentContext.$data[$data]"></td>\
+                            </tr>\
+                        </tbody>\
                     </div>\
-                </thead>\
-                <div data-bind="if: options.hasOwnProperty(&quot;columns&quot;)">\
-                    <tbody data-bind="foreach: pageList">\
-                        <tr data-bind="foreach: $parent.options.columns,selectable:$parent.options.selectable">\
-                                <td data-bind="template:{name: $parents[1].getTemplate($data),data:{row:$parentContext.$data,key:$data.key}},css:$data.class"></td>\
-                        </tr>\
-                    </tbody>\
-                </div>\
-                <div data-bind="if: !options.hasOwnProperty(&quot;columns&quot;)">\
-                    <tbody data-bind="foreach: pageList">\
-                        <tr data-bind="foreach: $parent.listKeys,selectable:$parent.options.selectable">\
-                            <td data-bind="text: $parentContext.$data[$data]"></td>\
-                        </tr>\
-                    </tbody>\
-                </div>\
-            </table>\
+                </table>\
+            </div>\
             <div data-bind="if: options.hasOwnProperty(&quot;pageRecords&quot;)">\
                 <ul class="pagination pull-right">\
                     <li>\

@@ -12,7 +12,11 @@
 
 <body>
     <div class="container">
-        <ko-table params="list: getPage,options:options"></ko-table>
+       <div class="row">
+           <div class="col-xs-12">
+               <ko-table params="list: people,options:options"></ko-table>
+           </div>
+       </div>    
     </div>
     <script type="text/html" id="html-template">
         <h4>html rendered here</h4>
